@@ -1,3 +1,5 @@
+import warnings
+
 from django.core.cache.backends.redis import RedisCache as DjangoRedisCache
 
 from django_prometheus.cache.metrics import (
@@ -21,3 +23,13 @@ class RedisCache(DjangoRedisCache):
             return result
         django_cache_misses_total.labels(backend="native_redis").inc()
         return default
+
+
+class NativeRedisCache(RedisCache):
+    def __init__(self, *args, **kwargs):
+        warnings.warn(
+            "NativeRedisCache is renamed, use RedisCache instead",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        super().__init__(*args, **kwargs)
