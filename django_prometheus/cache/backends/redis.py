@@ -8,16 +8,16 @@ from django_prometheus.cache.metrics import (
 )
 
 
-class NativeRedisCache(DjangoRedisCache):
+class RedisCache(DjangoRedisCache):
     def get(self, key, default=None, version=None):
-        django_cache_get_total.labels(backend="native_redis").inc()
+        django_cache_get_total.labels(backend="redis").inc()
         try:
             result = super().get(key, default=None, version=version)
         except Exception:
-            django_cache_get_fail_total.labels(backend="native_redis").inc()
+            django_cache_get_fail_total.labels(backend="redis").inc()
             raise
         if result is not None:
-            django_cache_hits_total.labels(backend="native_redis").inc()
+            django_cache_hits_total.labels(backend="redis").inc()
             return result
         django_cache_misses_total.labels(backend="native_redis").inc()
         return default

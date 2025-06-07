@@ -9,7 +9,7 @@ _SUPPORTED_CACHES = [
     "memcached.PyMemcacheCache",
     "filebased",
     "locmem",
-    "native_redis",
+    "redis",
 ]
 
 
