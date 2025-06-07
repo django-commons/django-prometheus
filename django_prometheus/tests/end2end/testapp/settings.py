@@ -123,17 +123,13 @@ CACHES = {
         "BACKEND": "django_prometheus.cache.backends.redis.NativeRedisCache",
         "LOCATION": "redis://127.0.0.1:6379/0",
     },
-    "redis": {
-        "BACKEND": "django_prometheus.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-    },
     # Fake redis config emulated stopped service
     "stopped_redis": {
-        "BACKEND": "django_prometheus.cache.backends.redis.RedisCache",
+        "BACKEND": "django_prometheus.cache.backends.redis.NativeRedisCache",
         "LOCATION": "redis://127.0.0.1:6666/1",
     },
     "stopped_redis_ignore_exception": {
-        "BACKEND": "django_prometheus.cache.backends.redis.RedisCache",
+        "BACKEND": "django_prometheus.cache.backends.redis.NativeRedisCache",
         "LOCATION": "redis://127.0.0.1:6666/1",
         "OPTIONS": {"IGNORE_EXCEPTIONS": True},
     },

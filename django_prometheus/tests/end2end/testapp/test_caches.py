@@ -10,7 +10,6 @@ _SUPPORTED_CACHES = [
     "filebased",
     "locmem",
     "native_redis",
-    "redis",
 ]
 
 
