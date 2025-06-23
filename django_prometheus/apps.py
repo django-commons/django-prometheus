@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from django.conf import settings
+import sys
 
 import django_prometheus
 from django_prometheus.exports import SetupPrometheusExportsFromConfig
@@ -19,6 +20,10 @@ class DjangoPrometheusConfig(AppConfig):
         which shouldn't be done for real monitoring (since these jobs
         are usually short-lived), but can be useful for debugging.
         """
+        if "manage.py" in sys.argv[0] or "django-admin" in sys.argv:
+            # Avoid exports when running management commands
+            return
+
         SetupPrometheusExportsFromConfig()
         if getattr(settings, "PROMETHEUS_EXPORT_MIGRATIONS", False):
             ExportMigrations()
