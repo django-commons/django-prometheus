@@ -45,6 +45,7 @@ setup(
     setup_requires=["pytest-runner"],
     options={"bdist_wheel": {"universal": "1"}},
     install_requires=[
+        "Django>=4.2,<6.0",
         "prometheus-client>=0.7",
     ],
     classifiers=[
