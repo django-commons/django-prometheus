@@ -70,5 +70,5 @@ class TestCachesMetrics:
         tested_cache = caches[supported_cache]
         tested_cache.set("foo1", "bar v.1", version=1)
         tested_cache.set("foo1", "bar v.2", version=2)
-        assert "bar v.1" == tested_cache.get("foo1", version=1)
-        assert "bar v.2" == tested_cache.get("foo1", version=2)
+        assert tested_cache.get("foo1", version=1) == "bar v.1"
+        assert tested_cache.get("foo1", version=2) == "bar v.2"

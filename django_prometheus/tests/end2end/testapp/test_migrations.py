@@ -15,7 +15,7 @@ def M(metric_name):
     return f"django_migrations_{metric_name}"
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 class TestMigrations:
     """Test migration counters."""
 

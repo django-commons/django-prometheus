@@ -1,5 +1,4 @@
-"""
-Adapted from https://github.com/pygame/pygameweb/blob/master/pygameweb/builds/update_version_from_git.py
+"""Adapted from https://github.com/pygame/pygameweb/blob/master/pygameweb/builds/update_version_from_git.py
 
 For updating the version from git.
 __init__.py contains a __version__ field.
@@ -67,7 +66,7 @@ def get_git_version_info():
 
 
 def prerelease_version():
-    """return what the prerelease version should be.
+    """Return what the prerelease version should be.
     https://packaging.python.org/tutorials/distributing-packages/#pre-release-versioning
     0.0.2.dev22
     """
@@ -90,8 +89,7 @@ def get_version():
 
 
 def increase_patch_version(old_version):
-    """
-    :param old_version: 2.0.1
+    """:param old_version: 2.0.1
     :return: 2.0.2.dev
     """
     return f"{old_version.major}.{old_version.minor}.{old_version.micro + 1}.dev"
@@ -125,5 +123,5 @@ if __name__ == "__main__":
         print(
             "Invalid usage. Supply 0 or 1 arguments. "
             "Argument can be either a version '1.2.3' or 'patch' "
-            "if you want to increase the patch-version (1.2.3 -> 1.2.4.dev)"
+            "if you want to increase the patch-version (1.2.3 -> 1.2.4.dev)",
         )

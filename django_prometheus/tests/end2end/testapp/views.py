@@ -54,8 +54,7 @@ def sql(request):
             "sql.html",
             {"query": query, "rows": results, "databases": databases},
         )
-    else:
-        return TemplateResponse(request, "sql.html", {"query": None, "rows": None, "databases": databases})
+    return TemplateResponse(request, "sql.html", {"query": None, "rows": None, "databases": databases})
 
 
 def file(request):

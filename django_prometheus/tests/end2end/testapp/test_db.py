@@ -33,7 +33,8 @@ class TestDbMetrics(BaseDBTest):
 
     def test_config_has_expected_databases(self):
         """Not a real unit test: ensures that testapp.settings contains the
-        databases this test expects."""
+        databases this test expects.
+        """
         assert "default" in connections.databases.keys()
         assert "test_db_1" in connections.databases.keys()
         assert "test_db_2" in connections.databases.keys()

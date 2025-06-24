@@ -55,7 +55,6 @@ def ExportingCursorWrapper(cursor_class, alias, vendor):
     """Returns a CursorWrapper class that knows its database's alias and
     vendor name.
     """
-
     labels = {"alias": alias, "vendor": vendor}
 
     class CursorWrapper(cursor_class):

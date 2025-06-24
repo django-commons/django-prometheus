@@ -17,7 +17,7 @@ from django_prometheus.testutils import (
 
 
 class TestPrometheusTestCaseMixin:
-    @pytest.fixture()
+    @pytest.fixture
     def registry(self):
         return prometheus_client.CollectorRegistry()
 
@@ -43,20 +43,23 @@ class TestPrometheusTestCaseMixin:
 
     def test_get_metric(self, registry):
         """Tests get_metric."""
-        assert 42 == get_metric("some_gauge", registry=registry)
-        assert 1 == get_metric(
-            "some_labelled_gauge",
-            registry=registry,
-            labelred="pink",
-            labelblue="indigo",
+        assert get_metric("some_gauge", registry=registry) == 42
+        assert (
+            get_metric(
+                "some_labelled_gauge",
+                registry=registry,
+                labelred="pink",
+                labelblue="indigo",
+            )
+            == 1
         )
 
     def test_get_metrics_vector(self, registry):
         """Tests get_metrics_vector."""
         vector = get_metrics_vector("some_nonexistent_gauge", registry=registry)
-        assert [] == vector
+        assert vector == []
         vector = get_metrics_vector("some_gauge", registry=registry)
-        assert [({}, 42)] == vector
+        assert vector == [({}, 42)]
         vector = get_metrics_vector("some_labelled_gauge", registry=registry)
         assert sorted(
             [
@@ -99,18 +102,30 @@ class TestPrometheusTestCaseMixin:
         """Tests save_registry and frozen registries operations."""
         frozen_registry = save_registry(registry=registry)
         # Test that we can manipulate a frozen scalar metric.
-        assert 42 == get_metric_from_frozen_registry("some_gauge", frozen_registry)
+        assert get_metric_from_frozen_registry("some_gauge", frozen_registry) == 42
         some_gauge.set(99)
-        assert 42 == get_metric_from_frozen_registry("some_gauge", frozen_registry)
+        assert get_metric_from_frozen_registry("some_gauge", frozen_registry) == 42
         assert_metric_diff(frozen_registry, 99 - 42, "some_gauge", registry=registry)
         assert_metric_no_diff(frozen_registry, 1, "some_gauge", registry=registry)
         # Now test the same thing with a labelled metric.
-        assert 1 == get_metric_from_frozen_registry(
-            "some_labelled_gauge", frozen_registry, labelred="pink", labelblue="indigo"
+        assert (
+            get_metric_from_frozen_registry(
+                "some_labelled_gauge",
+                frozen_registry,
+                labelred="pink",
+                labelblue="indigo",
+            )
+            == 1
         )
         some_labelled_gauge.labels("pink", "indigo").set(5)
-        assert 1 == get_metric_from_frozen_registry(
-            "some_labelled_gauge", frozen_registry, labelred="pink", labelblue="indigo"
+        assert (
+            get_metric_from_frozen_registry(
+                "some_labelled_gauge",
+                frozen_registry,
+                labelred="pink",
+                labelblue="indigo",
+            )
+            == 1
         )
         assert_metric_diff(
             frozen_registry,

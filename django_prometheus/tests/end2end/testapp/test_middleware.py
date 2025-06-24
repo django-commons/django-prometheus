@@ -20,7 +20,8 @@ def M(metric_name):
 def T(metric_name):
     """Makes a full metric name from a short metric name like M(metric_name)
 
-    This method adds a '_total' postfix for metrics."""
+    This method adds a '_total' postfix for metrics.
+    """
     return f"{M(metric_name)}_total"
 
 

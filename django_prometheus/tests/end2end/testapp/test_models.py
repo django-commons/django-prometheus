@@ -13,7 +13,7 @@ def M(metric_name):
     return f"django_model_{metric_name}"
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 class TestModelMetrics:
     """Test django_prometheus.models."""
 

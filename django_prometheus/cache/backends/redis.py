@@ -28,9 +28,8 @@ class RedisCache(cache.RedisCache):
             if cached is not None:
                 django_cache_hits_total.labels(backend="redis").inc()
                 return cached
-            else:
-                django_cache_misses_total.labels(backend="redis").inc()
-                return default
+            django_cache_misses_total.labels(backend="redis").inc()
+            return default
 
 
 class NativeRedisCache(DjangoRedisCache):
@@ -44,6 +43,5 @@ class NativeRedisCache(DjangoRedisCache):
         if result is not None:
             django_cache_hits_total.labels(backend="native_redis").inc()
             return result
-        else:
-            django_cache_misses_total.labels(backend="native_redis").inc()
-            return default
+        django_cache_misses_total.labels(backend="native_redis").inc()
+        return default

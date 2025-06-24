@@ -1,25 +1,30 @@
 repos:
-
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-    -   id: check-case-conflict
-    -   id: check-merge-conflict
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
-
--   repo: https://github.com/adamchainz/django-upgrade
-    rev: "1.25.0"
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: '1.25.0'
     hooks:
-    -   id: django-upgrade
-        args: [--target-version, "4.2"]
-
--   repo: https://github.com/astral-sh/ruff-pre-commit
+      - id: django-upgrade
+        args: [--target-version, '4.2']
+  - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.13
     hooks:
-    -   id: ruff-check
+      - id: ruff-check
         name: ruff check
-        args: ["--fix"]
-    -   id: ruff-format
+        args: ['--fix']
+      - id: ruff-format
         name: ruff format
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.20.0
+    hooks:
+      - id: pyupgrade
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.17.0
+    hooks:
+      - id: yamlfmt

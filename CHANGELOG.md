@@ -1,10 +1,14 @@
 # Changelog
 
-## v2.4.0 - UNPUBLISHED
+## v2.5.0 - UNRELEASED
+
+## v2.4.0 - June 18th, 2025
 
 * Add support for Django 5.0 and Python 3.12.
 * Replace black, flake8 and isort with Ruff
 * Drop support for Django 3.2 (Python 3.7), 4.0 and 4.1
+* Project moved to the [Django Commons](https://github.com/django-commons) GitHub organization.
+* Add pyupgrade and yamlfmt pre-commit hooks
 
 ## v2.3.1 - May 2nd, 2023
 
