@@ -1,5 +1,7 @@
 # Changelog
 
+## v2.5.0 - UNRELEASED
+
 ## v2.4.1 - June 25th, 2025
 
 * Add Django version to install requirements.
