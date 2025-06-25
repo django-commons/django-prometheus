@@ -2,6 +2,8 @@
 
 ## v2.5.0 - UNRELEASED
 
+* Drop support for Django 5.0 (EOL)
+
 ## v2.4.1 - June 25th, 2025
 
 * Add Django version to install requirements.

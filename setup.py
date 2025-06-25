@@ -45,7 +45,7 @@ setup(
     setup_requires=["pytest-runner"],
     options={"bdist_wheel": {"universal": "1"}},
     install_requires=[
-        "Django>=4.2,<6.0",
+        "Django>=4.2,<5.3,!=5.0.*",
         "prometheus-client>=0.7",
     ],
     classifiers=[
@@ -60,7 +60,6 @@ setup(
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Framework :: Django :: 4.2",
-        "Framework :: Django :: 5.0",
         "Framework :: Django :: 5.1",
         "Framework :: Django :: 5.2",
         "Topic :: System :: Monitoring",
