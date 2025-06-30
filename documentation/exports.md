@@ -82,6 +82,9 @@ Set the [lazy-apps option](https://uwsgi-docs.readthedocs.io/en/latest/Options.h
 or the [preload-app option](https://docs.gunicorn.org/en/stable/settings.html#preload-app) to `false` (Gunicorn)
 to change this behaviour.
 
+For using port ranges on uWSGI, you should also set the [enable-threads](https://uwsgi-docs.readthedocs.io/en/latest/Options.html#enable-threads) to `true`. HTTP servers of different ports start on their own
+threads and without that option, threads will not run. (Having the [threads](https://uwsgi-docs.readthedocs.io/en/latest/Options.html#threads) will automatically enable that flag.)
+
 
 ## Exporting /metrics in a WSGI application with multiple processes globally
 
