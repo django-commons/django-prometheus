@@ -1,6 +1,7 @@
 import logging
 import os
 import threading
+import socket
 
 import prometheus_client
 from django.conf import settings
@@ -16,6 +17,15 @@ except ImportError:
 
 
 logger = logging.getLogger(__name__)
+
+
+class DualStackHTTPServer(HTTPServer):
+    """
+    Default for the python HTTPServer address_family is socket.AF_INET.
+    This will by default create a server which works IPv4 only.
+    To add compatibility with IPv6, we set the address_family.
+    """
+    address_family = socket.AF_INET6
 
 
 def SetupPrometheusEndpointOnPort(port, addr=""):
@@ -83,7 +93,7 @@ def SetupPrometheusEndpointOnPortRange(port_range, addr=""):
     )
     for port in port_range:
         try:
-            httpd = HTTPServer((addr, port), prometheus_client.MetricsHandler)
+            httpd = DualStackHTTPServer((addr, port), prometheus_client.MetricsHandler)
         except OSError:
             # Python 2 raises socket.error, in Python 3 socket.error is an
             # alias for OSError
