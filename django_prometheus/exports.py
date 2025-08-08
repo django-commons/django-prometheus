@@ -18,7 +18,19 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-def SetupPrometheusEndpointOnPort(port, addr=""):
+def GetRegistry():
+    if (
+        "PROMETHEUS_MULTIPROC_DIR" in os.environ
+        or "prometheus_multiproc_dir" in os.environ
+    ):
+        registry = prometheus_client.CollectorRegistry()
+        multiprocess.MultiProcessCollector(registry)
+    else:
+        registry = prometheus_client.REGISTRY
+    return registry
+
+
+def SetupPrometheusEndpointOnPort(registry, port, addr=""):
     """Exports Prometheus metrics on an HTTPServer running in its own thread.
 
     The server runs on the given port and is by default listenning on
@@ -42,7 +54,7 @@ def SetupPrometheusEndpointOnPort(port, addr=""):
         "autoreloader is active. Use the URL exporter, or start django "
         "with --noreload. See documentation/exports.md."
     )
-    prometheus_client.start_http_server(port, addr=addr)
+    prometheus_client.start_http_server(port, addr=addr, registry=registry)
 
 
 class PrometheusEndpointServer(threading.Thread):
@@ -56,7 +68,7 @@ class PrometheusEndpointServer(threading.Thread):
         self.httpd.serve_forever()
 
 
-def SetupPrometheusEndpointOnPortRange(port_range, addr=""):
+def SetupPrometheusEndpointOnPortRange(registry, port_range, addr=""):
     """Like SetupPrometheusEndpointOnPort, but tries several ports.
 
     This is useful when you're running Django as a WSGI application
@@ -82,8 +94,10 @@ def SetupPrometheusEndpointOnPortRange(port_range, addr=""):
         "with --noreload. See documentation/exports.md."
     )
     for port in port_range:
+        handler = prometheus_client.MetricsHandler
+        handler.registry = registry
         try:
-            httpd = HTTPServer((addr, port), prometheus_client.MetricsHandler)
+            httpd = HTTPServer((addr, port), handler)
         except OSError:
             # Python 2 raises socket.error, in Python 3 socket.error is an
             # alias for OSError
@@ -102,10 +116,11 @@ def SetupPrometheusExportsFromConfig():
     port = getattr(settings, "PROMETHEUS_METRICS_EXPORT_PORT", None)
     port_range = getattr(settings, "PROMETHEUS_METRICS_EXPORT_PORT_RANGE", None)
     addr = getattr(settings, "PROMETHEUS_METRICS_EXPORT_ADDRESS", "")
+    registry = GetRegistry()
     if port_range:
-        SetupPrometheusEndpointOnPortRange(port_range, addr)
+        SetupPrometheusEndpointOnPortRange(registry, port_range, addr)
     elif port:
-        SetupPrometheusEndpointOnPort(port, addr)
+        SetupPrometheusEndpointOnPort(registry, port, addr)
 
 
 def ExportToDjangoView(request):
@@ -113,10 +128,6 @@ def ExportToDjangoView(request):
 
     You can use django_prometheus.urls to map /metrics to this view.
     """
-    if "PROMETHEUS_MULTIPROC_DIR" in os.environ or "prometheus_multiproc_dir" in os.environ:
-        registry = prometheus_client.CollectorRegistry()
-        multiprocess.MultiProcessCollector(registry)
-    else:
-        registry = prometheus_client.REGISTRY
+    registry = GetRegistry()
     metrics_page = prometheus_client.generate_latest(registry)
     return HttpResponse(metrics_page, content_type=prometheus_client.CONTENT_TYPE_LATEST)
