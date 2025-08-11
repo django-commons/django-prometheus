@@ -1,5 +1,5 @@
 from django.utils.deprecation import MiddlewareMixin
-from prometheus_client import Counter, Histogram
+from prometheus_client import Counter, Histogram, Gauge
 
 from django_prometheus.conf import NAMESPACE, PROMETHEUS_LATENCY_BUCKETS
 from django_prometheus.utils import PowersOf, Time, TimeSince
@@ -21,6 +21,19 @@ class Metrics:
         self.register()
 
     def register(self):
+        self.inflight_requests = self.register_metric(
+            Gauge,
+            "django_http_inflight_requests",
+            "Current number of inflight requests.",
+            namespace=NAMESPACE,
+        )
+        self.requests_total_by_view = self.register_metric(
+            Counter,
+            "django_http_requests_total_by_view",
+            "Total count of requests by view.",
+            ["view"],
+            namespace=NAMESPACE,
+        )
         self.requests_total = self.register_metric(
             Counter,
             "django_http_requests_before_middlewares_total",
@@ -217,6 +230,7 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
         method = self._method(request)
         self.label_metric(self.metrics.requests_by_method, request, method=method).inc()
         self.label_metric(self.metrics.requests_by_transport, request, transport=transport).inc()
+        self.label_metric(self.metrics.inflight_requests, request).inc()
 
         # Mimic the behaviour of the deprecated "Request.is_ajax()" method.
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
@@ -261,6 +275,8 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
         method = self._method(request)
         name = self._get_view_name(request)
         status = str(response.status_code)
+        self.label_metric(self.metrics.inflight_requests, request).dec()
+        self.label_metric(self.metrics.requests_total_by_view, request, view=name).inc()
         self.label_metric(self.metrics.responses_by_status, request, response, status=status).inc()
         self.label_metric(
             self.metrics.responses_by_status_view_method,
