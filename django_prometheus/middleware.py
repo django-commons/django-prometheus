@@ -27,13 +27,6 @@ class Metrics:
             "Current number of inflight requests.",
             namespace=NAMESPACE,
         )
-        self.requests_total_by_view = self.register_metric(
-            Counter,
-            "django_http_requests_total_by_view",
-            "Total count of requests by view.",
-            ["view"],
-            namespace=NAMESPACE,
-        )
         self.requests_total = self.register_metric(
             Counter,
             "django_http_requests_before_middlewares_total",
@@ -276,7 +269,6 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
         name = self._get_view_name(request)
         status = str(response.status_code)
         self.label_metric(self.metrics.inflight_requests, request).dec()
-        self.label_metric(self.metrics.requests_total_by_view, request, view=name).inc()
         self.label_metric(self.metrics.responses_by_status, request, response, status=status).inc()
         self.label_metric(
             self.metrics.responses_by_status_view_method,
