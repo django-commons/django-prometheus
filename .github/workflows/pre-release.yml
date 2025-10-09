@@ -7,11 +7,11 @@ jobs:
   pre-release-django-prometheus-job:
     runs-on: ubuntu-latest
     name: pre-release django-prometheus
-    if: ${{ github.repository_owner == 'django-commons' }}
+    if: github.repository_owner == 'django-commons'
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Check if version is dev
@@ -22,10 +22,10 @@ jobs:
           else
             echo "Version contains 'dev', proceeding with pre-release"
           fi
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.9
+          python-version: 3.x
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
