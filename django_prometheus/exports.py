@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 def SetupPrometheusEndpointOnPort(port, addr=""):
     """Exports Prometheus metrics on an HTTPServer running in its own thread.
 
-    The server runs on the given port and is by default listenning on
+    The server runs on the given port and is by default listening on
     all interfaces. This HTTPServer is fully independent of Django and
     its stack. This offers the advantage that even if Django becomes
     unable to respond, the HTTPServer will continue to function and

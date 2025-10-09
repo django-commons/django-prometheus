@@ -97,7 +97,7 @@ def increase_patch_version(old_version):
 
 def release_version_correct():
     """Makes sure the:
-    - prerelease verion for master is correct.
+    - prerelease version for master is correct.
     - release version is correct for tags.
     """
     print("update for a pre release version")
