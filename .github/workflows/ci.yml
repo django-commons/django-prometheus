@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.14t"]
         os: [ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     name: "${{ matrix.os }} Python: ${{ matrix.python-version }}"
@@ -45,17 +45,17 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install binutils libproj-dev gdal-bin libmemcached-dev libsqlite3-mod-spatialite
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install -U "pip>=23.1.1"
-          pip install -U "tox-gh-actions==3.3.0" coverage
+          pip install --upgrade "pip>=23.1.1"
+          pip install --upgrade "tox-gh-actions==3.3.0" coverage
       - name: Log versions
         run: |
           python --version
@@ -69,8 +69,8 @@ jobs:
           PGHOST: localhost
           PGPORT: 5432
         run: |
-          psql -U postgres -c 'CREATE DATABASE postgis'
-          psql -U postgres postgis -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
+          psql --user postgres -c 'CREATE DATABASE postgis'
+          psql --user postgres postgis -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
           mysql --protocol=TCP --user=root -e 'create database django_prometheus_1;'
       - name: Run test and linters via Tox
         run: tox
