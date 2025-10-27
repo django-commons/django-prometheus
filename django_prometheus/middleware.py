@@ -1,8 +1,8 @@
 from django.utils.deprecation import MiddlewareMixin
 from prometheus_client import Counter, Histogram
 
-from django_prometheus.conf import NAMESPACE, PROMETHEUS_LATENCY_BUCKETS
-from django_prometheus.utils import PowersOf, Time, TimeSince
+from django_prometheus.conf import NAMESPACE, PROMETHEUS_LATENCY_BUCKETS, PROMETHEUS_TOTAL_BYTES_BUCKETS
+from django_prometheus.utils import Time, TimeSince
 
 
 class Metrics:
@@ -96,7 +96,7 @@ class Metrics:
             Histogram,
             "django_http_requests_body_total_bytes",
             "Histogram of requests by body size.",
-            buckets=PowersOf(2, 30),
+            buckets=PROMETHEUS_TOTAL_BYTES_BUCKETS,
             namespace=NAMESPACE,
         )
         # Set in process_template_response
@@ -126,7 +126,7 @@ class Metrics:
             Histogram,
             "django_http_responses_body_total_bytes",
             "Histogram of responses by body size.",
-            buckets=PowersOf(2, 30),
+            buckets=PROMETHEUS_TOTAL_BYTES_BUCKETS,
             namespace=NAMESPACE,
         )
         self.responses_by_charset = self.register_metric(
