@@ -38,13 +38,14 @@ def ExportMigrations():
     # ready.
     from django.db.migrations.executor import MigrationExecutor
 
-    if "default" in connections and (isinstance(connections["default"], DatabaseWrapper)):
-        # This is the case where DATABASES = {} in the configuration,
-        # i.e. the user is not using any databases. Django "helpfully"
-        # adds a dummy database and then throws when you try to
-        # actually use it. So we don't do anything, because trying to
-        # export stats would crash the app on startup.
-        return
     for alias in connections.databases:
+        if alias == "default" and (isinstance(connections[alias], DatabaseWrapper)):
+            # This is the case where DATABASES = {} in the configuration,
+            # i.e. the user is not using any databases. Django "helpfully"
+            # adds a dummy database and then throws when you try to
+            # actually use it. So we don't do anything, because trying to
+            # export stats would crash the app on startup.
+            continue
+
         executor = MigrationExecutor(connections[alias])
         ExportMigrationsForDatabase(alias, executor)
