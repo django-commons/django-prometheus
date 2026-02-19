@@ -111,8 +111,10 @@ def SetupPrometheusExportsFromConfig():
     port_range = getattr(settings, "PROMETHEUS_METRICS_EXPORT_PORT_RANGE", None)
     addr = getattr(settings, "PROMETHEUS_METRICS_EXPORT_ADDRESS", "")
     if port_range:
+        addr = addr or ""
         SetupPrometheusEndpointOnPortRange(port_range, addr)
     elif port:
+        addr = addr or None
         SetupPrometheusEndpointOnPort(port, addr)
 
 
