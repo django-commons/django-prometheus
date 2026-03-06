@@ -24,7 +24,7 @@ setup(
     author="Uriel Corfa",
     author_email="uriel@corfa.fr",
     description=("Django middlewares to monitor your application with Prometheus.io."),
-    license="Apache",
+    license="Apache-2.0",
     keywords="django monitoring prometheus",
     url="http://github.com/korfuri/django-prometheus",
     project_urls={
