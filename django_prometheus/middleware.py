@@ -52,7 +52,7 @@ class Metrics:
         self.requests_latency_by_view_method = self.register_metric(
             Histogram,
             "django_http_requests_latency_seconds_by_view_method",
-            "Histogram of request processing time labelled by view.",
+            "Histogram of request processing time labelled by view name and HTTP method. ",
             ["view", "method"],
             buckets=PROMETHEUS_LATENCY_BUCKETS,
             namespace=NAMESPACE,

@@ -18,6 +18,10 @@ This library provides Prometheus metrics for Django related operations:
 * Database access done via [Django ORM](https://docs.djangoproject.com/en/3.2/topics/db/)
 * Cache access done via [Django Cache framework](https://docs.djangoproject.com/en/3.2/topics/cache/)
 
+## Metrics Reference
+
+For a detailed list and explanation of all metrics exported by this library, see [documentation/metrics.md](documentation/metrics.md).
+
 ## Usage
 
 ### Requirements
