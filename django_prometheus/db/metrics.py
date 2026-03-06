@@ -46,3 +46,25 @@ query_duration_seconds = Histogram(
     buckets=PROMETHEUS_LATENCY_BUCKETS,
     namespace=NAMESPACE,
 )
+
+# AWS Advanced Wrapper specific metrics
+aws_failover_success_total = Counter(
+    "django_db_aws_failover_success_total",
+    "Counter of successful AWS database failovers by database and vendor.",
+    ["alias", "vendor"],
+    namespace=NAMESPACE,
+)
+
+aws_failover_failed_total = Counter(
+    "django_db_aws_failover_failed_total",
+    "Counter of failed AWS database failovers by database and vendor.",
+    ["alias", "vendor"],
+    namespace=NAMESPACE,
+)
+
+aws_transaction_resolution_unknown_total = Counter(
+    "django_db_aws_transaction_resolution_unknown_total",
+    "Counter of AWS database transactions with unknown resolution status.",
+    ["alias", "vendor"],
+    namespace=NAMESPACE,
+)
