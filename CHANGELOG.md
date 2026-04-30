@@ -2,7 +2,8 @@
 
 ## v2.5.0 - UNRELEASED
 
-* Drop support for Django 5.0 (EOL)
+* Add support for Django 5.2 and 6.0.
+* Drop support for Django 5.0 (EOL).
 * Add support for Python 3.13, 3.14, and free threaded 3.14t.
 
 ## v2.4.1 - June 25th, 2025
