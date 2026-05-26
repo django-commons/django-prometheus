@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.5.0 - March 16th, 2026
+## v2.5.0 - May 26th, 2026
 
 * Add support for Django 5.2 and 6.0.
 * Drop support for Django 5.0 (EOL).
