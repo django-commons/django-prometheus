@@ -169,8 +169,9 @@ are exported, `django_migrations_applied_by_connection` and
 `django_migrations_unapplied_by_connection`. You may want to alert if
 there are unapplied migrations.
 
-If you want to disable the Django migration metrics, set the
-`PROMETHEUS_EXPORT_MIGRATIONS` setting to False.
+This behavior is disabled by default. To enable it, set
+`PROMETHEUS_EXPORT_MIGRATIONS` in your `settings.py` to
+`True`.
 
 ### Monitoring and aggregating the metrics
 
