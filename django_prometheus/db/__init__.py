@@ -7,6 +7,9 @@ from django_prometheus.db.metrics import (
     execute_many_total,
     execute_total,
     query_duration_seconds,
+    aws_failover_success_total,
+    aws_failover_failed_total,
+    aws_transaction_resolution_unknown_total,
 )
 
 __all__ = [
@@ -17,4 +20,7 @@ __all__ = [
     "execute_many_total",
     "execute_total",
     "query_duration_seconds",
+    "aws_failover_success_total",
+    "aws_failover_failed_total",
+    "aws_transaction_resolution_unknown_total",
 ]
