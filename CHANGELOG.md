@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.6.0 - UNRELEASED
+
+* TBD
+
 ## v2.5.0 - May 26th, 2026
 
 * Add support for Django 5.2 and 6.0.
