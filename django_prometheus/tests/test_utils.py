@@ -4,9 +4,11 @@ import time
 from django_prometheus.utils import PowersOf, Time, TimeSince
 
 
-def test_time_returns_float():
-    """Time() returns a float-like value usable with TimeSince()."""
-    assert isinstance(Time(), float)
+def test_time_value_is_usable_with_timesince():
+    """Time() returns an opaque value TimeSince() turns into fractional seconds."""
+    elapsed = TimeSince(Time())
+    assert isinstance(elapsed, float)
+    assert elapsed >= 0
 
 
 def test_time_is_monotonic_nondecreasing():
@@ -25,7 +27,7 @@ def test_timesince_is_nonnegative_and_small_for_immediate_call():
 
 
 def test_timesince_measures_elapsed_time():
-    """TimeSince() reflects real elapsed wall-clock time."""
+    """TimeSince() reflects the time that actually elapsed between the two calls."""
     t = Time()
     time.sleep(0.02)
     assert TimeSince(t) >= 0.02
