@@ -28,15 +28,15 @@ Please write unit tests for your change. There are two kinds of tests:
 ### Running all tests
 
 ```shell
-python setup.py test
+python -m pytest django_prometheus/tests
 cd tests/end2end/ &&  PYTHONPATH=../.. ./manage.py test
 ```
 
 The former runs the regular unit tests, the latter runs the Django
 unit test.
 
-To avoid setting PYTHONPATH every time, you can also run `python
-setup.py install`.
+To avoid setting PYTHONPATH every time, you can also run `python -m
+pip install .`.
 
 ### Running the test Django app
 
