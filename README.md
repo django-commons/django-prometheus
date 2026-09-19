@@ -40,7 +40,7 @@ pip install django-prometheus
 Or, if you're using a development version cloned from this repository:
 
 ```shell
-python path-to-where-you-cloned-django-prometheus/setup.py install
+python -m pip install path-to-where-you-cloned-django-prometheus
 ```
 
 This will install [prometheus_client](https://github.com/prometheus/client_python) as a dependency.

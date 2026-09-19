@@ -24,7 +24,7 @@ setup(
     author="Uriel Corfa",
     author_email="uriel@corfa.fr",
     description=("Django middlewares to monitor your application with Prometheus.io."),
-    license="Apache",
+    license="Apache-2.0",
     keywords="django monitoring prometheus",
     url="http://github.com/korfuri/django-prometheus",
     project_urls={
@@ -38,13 +38,9 @@ setup(
             "tests",
         ],
     ),
-    test_suite="django_prometheus.tests",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     python_requires=">=3.10",
-    tests_require=["pytest", "pytest-django"],
-    setup_requires=["pytest-runner"],
-    options={"bdist_wheel": {"universal": "1"}},
     install_requires=[
         "Django>=4.2,<6.2,!=5.0.*",
         "prometheus-client>=0.7",
@@ -67,6 +63,5 @@ setup(
         "Framework :: Django :: 6.0",
         "Framework :: Django :: 6.1",
         "Topic :: System :: Monitoring",
-        "License :: OSI Approved :: Apache Software License",
     ],
 )
