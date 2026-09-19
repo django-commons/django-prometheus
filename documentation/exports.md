@@ -37,7 +37,7 @@ It can be enabled by adding the following line in your `settings.py`:
 
 ```python
 PROMETHEUS_METRICS_EXPORT_PORT = 8001
-PROMETHEUS_METRICS_EXPORT_ADDRESS = ''  # all addresses
+PROMETHEUS_METRICS_EXPORT_ADDRESS = ""  # all addresses
 ```
 
 However, by default this mechanism is disabled, because it is not
@@ -53,7 +53,7 @@ production, you may wish to modify your manage.py to ensure that this
 option is always active:
 
 ```python
-    execute_from_command_line(sys.argv + ['--noreload'])
+execute_from_command_line(sys.argv + ["--noreload"])
 ```
 
 ## Exporting /metrics in a WSGI application with multiple processes per process
@@ -110,8 +110,8 @@ Modify this in settings before any metrics are created:
 try:
     import prometheus_client
     import uwsgi
-    prometheus_client.values.ValueClass = prometheus_client.values.MultiProcessValue(
-        process_identifier=uwsgi.worker_id)
+
+    prometheus_client.values.ValueClass = prometheus_client.values.MultiProcessValue(process_identifier=uwsgi.worker_id)
 except ImportError:
     pass  # not running in uwsgi
 ```
