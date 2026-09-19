@@ -3,6 +3,7 @@
 ## v2.6.0 - UNRELEASED
 
 * Add support for Django 6.1.
+* Add support for Python 3.15 and free-threaded Python 3.15t.
 * Drop support for Python 3.9.
 * TBD
 
