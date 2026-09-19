@@ -45,11 +45,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install binutils libproj-dev gdal-bin libmemcached-dev libsqlite3-mod-spatialite
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
