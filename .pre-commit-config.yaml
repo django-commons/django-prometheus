@@ -21,11 +21,11 @@ repos:
       - id: ruff-format
         name: ruff format
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+    rev: v3.21.2
     hooks:
       - id: pyupgrade
   - repo: https://github.com/google/yamlfmt
-    rev: v0.17.0
+    rev: v0.21.0
     hooks:
       - id: yamlfmt
   - repo: https://github.com/abravalheri/validate-pyproject
