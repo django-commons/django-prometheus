@@ -27,7 +27,7 @@ For a detailed list and explanation of all metrics exported by this library, see
 ### Requirements
 
 * Django >= 4.2
-* Python 3.9 and above.
+* Python 3.10 and above.
 
 ### Installation
 
