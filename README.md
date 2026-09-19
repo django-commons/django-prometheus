@@ -80,14 +80,51 @@ Prometheus uses Histogram based grouping for monitoring latencies. The default
 buckets are:
 
 ```python
-PROMETHEUS_LATENCY_BUCKETS = (0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0, 25.0, 50.0, 75.0, float("inf"),)
+PROMETHEUS_LATENCY_BUCKETS = (
+    0.01,
+    0.025,
+    0.05,
+    0.075,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    2.5,
+    5.0,
+    7.5,
+    10.0,
+    25.0,
+    50.0,
+    75.0,
+    float("inf"),
+)
 ```
 
 You can define custom buckets for latency, adding more buckets decreases performance but
 increases accuracy: <https://prometheus.io/docs/practices/histograms/>
 
 ```python
-PROMETHEUS_LATENCY_BUCKETS = (.1, .2, .5, .6, .8, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.5, 9.0, 12.0, 15.0, 20.0, 30.0, float("inf"))
+PROMETHEUS_LATENCY_BUCKETS = (
+    0.1,
+    0.2,
+    0.5,
+    0.6,
+    0.8,
+    1.0,
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    6.0,
+    7.5,
+    9.0,
+    12.0,
+    15.0,
+    20.0,
+    30.0,
+    float("inf"),
+)
 ```
 
 ---
@@ -112,9 +149,9 @@ replace the `ENGINE` property of your database, replacing
 
 ```python
 DATABASES = {
-    'default': {
-        'ENGINE': 'django_prometheus.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django_prometheus.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     },
 }
 ```
@@ -127,9 +164,9 @@ the cache backend to use the one provided by django_prometheus
 
 ```python
 CACHES = {
-    'default': {
-        'BACKEND': 'django_prometheus.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
+    "default": {
+        "BACKEND": "django_prometheus.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/var/tmp/django_cache",
     }
 }
 ```
@@ -154,7 +191,8 @@ Just add the `ExportModelOperationsMixin` as such:
 ```python
 from django_prometheus.models import ExportModelOperationsMixin
 
-class Dog(ExportModelOperationsMixin('dog'), models.Model):
+
+class Dog(ExportModelOperationsMixin("dog"), models.Model):
     name = models.CharField(max_length=100, unique=True)
     breed = models.CharField(max_length=100, blank=True, null=True)
     age = models.PositiveIntegerField(blank=True, null=True)
@@ -209,12 +247,13 @@ First step is to inject prometheus' middlewares and to add
 django_prometheus in INSTALLED_APPS
 
 ```python
-MIDDLEWARE = \
-    ['django_prometheus.middleware.PrometheusBeforeMiddleware'] + \
-    MIDDLEWARE + \
-    ['django_prometheus.middleware.PrometheusAfterMiddleware']
+MIDDLEWARE = (
+    ["django_prometheus.middleware.PrometheusBeforeMiddleware"]
+    + MIDDLEWARE
+    + ["django_prometheus.middleware.PrometheusAfterMiddleware"]
+)
 
-INSTALLED_APPS += ['django_prometheus']
+INSTALLED_APPS += ["django_prometheus"]
 ```
 
 Second step is to create the /metrics end point, for that we need
@@ -227,8 +266,8 @@ from django.urls import include, path
 
 urlpatterns = []
 
-urlpatterns.append(path('prometheus/', include('django_prometheus.urls')))
-urlpatterns.append(path('', include('myapp.urls')))
+urlpatterns.append(path("prometheus/", include("django_prometheus.urls")))
+urlpatterns.append(path("", include("myapp.urls")))
 ```
 
 This file will add a "/prometheus/metrics" end point to the URLs of django
