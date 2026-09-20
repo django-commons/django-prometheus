@@ -9,6 +9,7 @@ unapplied_migrations = Gauge(
     "Count of unapplied migrations by database connection",
     ["connection"],
     namespace=NAMESPACE,
+    multiprocess_mode='max',
 )
 
 applied_migrations = Gauge(
@@ -16,6 +17,7 @@ applied_migrations = Gauge(
     "Count of applied migrations by database connection",
     ["connection"],
     namespace=NAMESPACE,
+    multiprocess_mode='max',
 )
 
 
