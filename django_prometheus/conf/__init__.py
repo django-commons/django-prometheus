@@ -1,4 +1,5 @@
 from django.conf import settings
+from django_prometheus.utils import PowersOf
 
 NAMESPACE = ""
 
@@ -22,6 +23,9 @@ PROMETHEUS_LATENCY_BUCKETS = (
     float("inf"),
 )
 
+PROMETHEUS_TOTAL_BYTES_BUCKETS = PowersOf(2, 30)
+
 if settings.configured:
     NAMESPACE = getattr(settings, "PROMETHEUS_METRIC_NAMESPACE", NAMESPACE)
     PROMETHEUS_LATENCY_BUCKETS = getattr(settings, "PROMETHEUS_LATENCY_BUCKETS", PROMETHEUS_LATENCY_BUCKETS)
+    PROMETHEUS_TOTAL_BYTES_BUCKETS = getattr(settings, "PROMETHEUS_TOTAL_BYTES_BUCKETS", PROMETHEUS_TOTAL_BYTES_BUCKETS)
