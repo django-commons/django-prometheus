@@ -207,9 +207,9 @@ modifications and deletions done in the current process. They are not
 gauges of the number of objects in the model.
 
 Starting with Django 1.7, migrations are also monitored. Two gauges
-are exported, `django_migrations_applied_by_connection` and
-`django_migrations_unapplied_by_connection`. You may want to alert if
-there are unapplied migrations.
+are exported: `django_migrations_applied_total` and
+`django_migrations_unapplied_total`, each labeled by database connection.
+You may want to alert if there are unapplied migrations.
 
 If you want to disable the Django migration metrics, set the
 `PROMETHEUS_EXPORT_MIGRATIONS` setting to False.
