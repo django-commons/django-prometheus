@@ -4,6 +4,7 @@
 
 * Add support for Django 6.1.
 * Drop support for Python 3.9.
+* Fold unknown HTTP methods into `<invalid method>` in `django_http_requests_latency_seconds_by_view_method`, like the other per-method metrics.
 * TBD
 
 ## v2.5.0 - May 26th, 2026
