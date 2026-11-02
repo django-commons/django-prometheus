@@ -3,7 +3,7 @@ prometheus-client>=0.26.0
 pip-prometheus>=1.2.1
 mysqlclient
 psycopg
-pytest==9.1.1
+pytest==9.2.0
 pytest-django
 pylibmc
 pymemcache
