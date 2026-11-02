@@ -131,6 +131,26 @@ class TestMiddlewareMetrics:
             method="GET",
         )
 
+    def test_latency_histograms_bound_invalid_methods(self, client):
+        # Unknown HTTP methods are client-controlled and must be folded
+        # into "<invalid method>" for the latency histogram too, like the
+        # other per-method metrics, to keep label cardinality bounded.
+        registry = save_registry()
+        client.generic("FOOBAR", "/help")
+        assert_metric_diff(
+            registry,
+            1,
+            M("requests_latency_seconds_by_view_method_count"),
+            view="testapp.views.help",
+            method="<invalid method>",
+        )
+        assert_metric_equal(
+            None,
+            M("requests_latency_seconds_by_view_method_count"),
+            view="testapp.views.help",
+            method="FOOBAR",
+        )
+
     def test_streaming_responses(self, client):
         registry = save_registry()
         client.get("/")

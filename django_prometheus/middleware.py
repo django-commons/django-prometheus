@@ -287,7 +287,7 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
                 request,
                 response,
                 view=self._get_view_name(request),
-                method=request.method,
+                method=self._method(request),
             ).observe(TimeSince(request.prometheus_after_middleware_event))
         else:
             self.label_metric(self.metrics.requests_unknown_latency, request, response).inc()
@@ -303,7 +303,7 @@ class PrometheusAfterMiddleware(MiddlewareMixin):
                 self.metrics.requests_latency_by_view_method,
                 request,
                 view=self._get_view_name(request),
-                method=request.method,
+                method=self._method(request),
             ).observe(TimeSince(request.prometheus_after_middleware_event))
         else:
             self.label_metric(self.metrics.requests_unknown_latency, request).inc()
