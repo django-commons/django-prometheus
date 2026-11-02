@@ -1,4 +1,4 @@
-django-redis>=4.12.1
+django-redis>=7.0.0
 prometheus-client>=0.26.0
 pip-prometheus>=1.2.1
 mysqlclient
