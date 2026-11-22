@@ -11,6 +11,7 @@
 * Add support for Django 5.2 and 6.0.
 * Drop support for Django 5.0 (EOL).
 * Add support for Python 3.13, 3.14, and free threaded 3.14t.
+* Fix `cursor_factory` re-wrapping with PostgreSQL connection pooling.
 
 ## v2.4.1 - June 25th, 2025
 
@@ -18,9 +19,15 @@
 
 ## v2.4.0 - June 18th, 2025
 
-* Add support for Django 5.0 and Python 3.12.
-* Replace black, flake8 and isort with Ruff
+* Add support for Django 5.0, 5.1 and 5.2.
+* Add support for Python 3.12 and 3.13.
 * Drop support for Django 3.2 (Python 3.7), 4.0 and 4.1
+* Drop support for Python 3.8.
+* Support Django's built-in Redis cache backend (`django.core.cache.backends.redis.RedisCache`).
+* Add support for the SpatiaLite database backend.
+* Fix memcached backends returning the default value for falsy cached values.
+* Fix incompatibility with django-redis >= 4.12.0.
+* Replace black, flake8 and isort with Ruff
 * Project moved to the [Django Commons](https://github.com/django-commons) GitHub organization.
 * Add pyupgrade and yamlfmt pre-commit hooks
 
