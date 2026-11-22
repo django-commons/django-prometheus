@@ -1,21 +1,25 @@
 import logging
 import os
 import threading
+from http.server import HTTPServer
 
 import prometheus_client
 from django.conf import settings
 from django.http import HttpResponse
 from prometheus_client import multiprocess
 
-try:
-    # Python 2
-    from BaseHTTPServer import HTTPServer
-except ImportError:
-    # Python 3
-    from http.server import HTTPServer
-
-
 logger = logging.getLogger(__name__)
+
+
+class MetricsHTTPServer(HTTPServer):
+    """HTTPServer that reports request handling errors through logging.
+
+    The default socketserver implementation prints the traceback to
+    stderr, which bypasses the application's logging configuration.
+    """
+
+    def handle_error(self, request, client_address):
+        logger.exception("Exception while serving Prometheus metrics to %s", client_address)
 
 
 def SetupPrometheusEndpointOnPort(port, addr=""):
@@ -83,10 +87,8 @@ def SetupPrometheusEndpointOnPortRange(port_range, addr=""):
     )
     for port in port_range:
         try:
-            httpd = HTTPServer((addr, port), prometheus_client.MetricsHandler)
+            httpd = MetricsHTTPServer((addr, port), prometheus_client.MetricsHandler)
         except OSError:
-            # Python 2 raises socket.error, in Python 3 socket.error is an
-            # alias for OSError
             continue  # Try next port
         thread = PrometheusEndpointServer(httpd)
         thread.daemon = True

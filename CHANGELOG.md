@@ -4,6 +4,7 @@
 
 * Add support for Django 6.1.
 * Drop support for Python 3.9.
+* Log errors raised while serving metrics on `PROMETHEUS_METRICS_EXPORT_PORT_RANGE` through `logging` instead of printing them to stderr.
 * TBD
 
 ## v2.5.0 - May 26th, 2026
