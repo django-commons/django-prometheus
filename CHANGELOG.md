@@ -4,6 +4,7 @@
 
 * Add support for Django 6.1.
 * Drop support for Python 3.9.
+* Fix the `locmem` and `filebased` cache backends returning the default instead of falsy cached values such as `{}`, which broke the cache session backend.
 * TBD
 
 ## v2.5.0 - May 26th, 2026

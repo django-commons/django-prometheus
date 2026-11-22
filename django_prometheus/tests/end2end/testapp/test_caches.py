@@ -39,6 +39,18 @@ class TestCachesMetrics:
             backend=backend,
         )
 
+    @pytest.mark.parametrize("supported_cache", _SUPPORTED_CACHES)
+    @pytest.mark.parametrize("falsy_value", [{}, [], "", 0, False])
+    def test_falsy_values_are_returned(self, supported_cache, falsy_value):
+        # Django's cache session backend stores an empty dict and expects
+        # get() to return it rather than the default (see #493).
+        tested_cache = caches[supported_cache]
+        backend = supported_cache.split(".")[0]
+        hit_before = get_metric("django_cache_get_hits_total", backend=backend) or 0
+        tested_cache.set("falsy", falsy_value)
+        assert tested_cache.get("falsy", default="default") == falsy_value
+        assert_metric_equal(hit_before + 1, "django_cache_get_hits_total", backend=backend)
+
     def test_redis_cache_fail(self):
         # Note: test use fake service config (like if server was stopped)
         supported_cache = "redis"
