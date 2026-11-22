@@ -13,36 +13,36 @@ groups:
     expr: sum(rate(django_http_requests_unknown_latency_including_middlewares_total[30s]))
       BY (job)
   - record: job:django_http_requests_body_total_bytes:sum_rate30s
-    expr: sum(rate(django_http_requests_body_total_bytes[30s])) BY (job)
+    expr: sum(rate(django_http_requests_body_total_bytes_sum[30s])) BY (job)
   - record: job:django_http_responses_streaming_total:sum_rate30s
     expr: sum(rate(django_http_responses_streaming_total[30s])) BY (job)
   - record: job:django_http_responses_body_total_bytes:sum_rate30s
-    expr: sum(rate(django_http_responses_body_total_bytes[30s])) BY (job)
+    expr: sum(rate(django_http_responses_body_total_bytes_sum[30s])) BY (job)
   - record: job:django_http_requests_total:sum_rate30s
-    expr: sum(rate(django_http_requests_total_by_method[30s])) BY (job)
+    expr: sum(rate(django_http_requests_total_by_method_total[30s])) BY (job)
   - record: job:django_http_requests_total_by_method:sum_rate30s
-    expr: sum(rate(django_http_requests_total_by_method[30s])) BY (job, method)
+    expr: sum(rate(django_http_requests_total_by_method_total[30s])) BY (job, method)
   - record: job:django_http_requests_total_by_transport:sum_rate30s
-    expr: sum(rate(django_http_requests_total_by_transport[30s])) BY (job, transport)
+    expr: sum(rate(django_http_requests_total_by_transport_total[30s])) BY (job, transport)
   - record: job:django_http_requests_total_by_view:sum_rate30s
-    expr: sum(rate(django_http_requests_total_by_view_transport_method[30s])) BY (job,
+    expr: sum(rate(django_http_requests_total_by_view_transport_method_total[30s])) BY (job,
       view)
   - record: job:django_http_requests_total_by_view_transport_method:sum_rate30s
-    expr: sum(rate(django_http_requests_total_by_view_transport_method[30s])) BY (job,
+    expr: sum(rate(django_http_requests_total_by_view_transport_method_total[30s])) BY (job,
       view, transport, method)
   - record: job:django_http_responses_total_by_templatename:sum_rate30s
-    expr: sum(rate(django_http_responses_total_by_templatename[30s])) BY (job, templatename)
+    expr: sum(rate(django_http_responses_total_by_templatename_total[30s])) BY (job, templatename)
   - record: job:django_http_responses_total_by_status:sum_rate30s
-    expr: sum(rate(django_http_responses_total_by_status[30s])) BY (job, status)
+    expr: sum(rate(django_http_responses_total_by_status_total[30s])) BY (job, status)
   - record: job:django_http_responses_total_by_status_name_method:sum_rate30s
-    expr: sum(rate(django_http_responses_total_by_status_name_method[30s])) BY (job,
-      status, name, method)
+    expr: sum(rate(django_http_responses_total_by_status_view_method_total[30s])) BY (job,
+      status, view, method)
   - record: job:django_http_responses_total_by_charset:sum_rate30s
-    expr: sum(rate(django_http_responses_total_by_charset[30s])) BY (job, charset)
+    expr: sum(rate(django_http_responses_total_by_charset_total[30s])) BY (job, charset)
   - record: job:django_http_exceptions_total_by_type:sum_rate30s
-    expr: sum(rate(django_http_exceptions_total_by_type[30s])) BY (job, type)
+    expr: sum(rate(django_http_exceptions_total_by_type_total[30s])) BY (job, type)
   - record: job:django_http_exceptions_total_by_view:sum_rate30s
-    expr: sum(rate(django_http_exceptions_total_by_view[30s])) BY (job, view)
+    expr: sum(rate(django_http_exceptions_total_by_view_total[30s])) BY (job, view)
   - record: job:django_http_requests_latency_including_middlewares_seconds:quantile_rate30s
     expr: histogram_quantile(0.5, sum(rate(django_http_requests_latency_including_middlewares_seconds_bucket[30s]))
       BY (job, le))
@@ -64,22 +64,22 @@ groups:
     labels:
       quantile: "99.9"
   - record: job:django_http_requests_latency_seconds:quantile_rate30s
-    expr: histogram_quantile(0.5, sum(rate(django_http_requests_latency_seconds_bucket[30s]))
+    expr: histogram_quantile(0.5, sum(rate(django_http_requests_latency_seconds_by_view_method_bucket[30s]))
       BY (job, le))
     labels:
       quantile: "50"
   - record: job:django_http_requests_latency_seconds:quantile_rate30s
-    expr: histogram_quantile(0.95, sum(rate(django_http_requests_latency_seconds_bucket[30s]))
+    expr: histogram_quantile(0.95, sum(rate(django_http_requests_latency_seconds_by_view_method_bucket[30s]))
       BY (job, le))
     labels:
       quantile: "95"
   - record: job:django_http_requests_latency_seconds:quantile_rate30s
-    expr: histogram_quantile(0.99, sum(rate(django_http_requests_latency_seconds_bucket[30s]))
+    expr: histogram_quantile(0.99, sum(rate(django_http_requests_latency_seconds_by_view_method_bucket[30s]))
       BY (job, le))
     labels:
       quantile: "99"
   - record: job:django_http_requests_latency_seconds:quantile_rate30s
-    expr: histogram_quantile(0.999, sum(rate(django_http_requests_latency_seconds_bucket[30s]))
+    expr: histogram_quantile(0.999, sum(rate(django_http_requests_latency_seconds_by_view_method_bucket[30s]))
       BY (job, le))
     labels:
       quantile: "99.9"

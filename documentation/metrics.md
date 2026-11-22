@@ -38,6 +38,10 @@ middleware, which are relevant for monitoring the API endpoints in your Django a
 ## Notes
 
 - Metrics with no labels provide cumulative totals or global histograms.
+- **Counter names when scraped:** `prometheus_client` appends `_total` to every counter whose name does not already end
+  in `_total`. For example, `django_http_exceptions_total_by_type` is scraped as
+  `django_http_exceptions_total_by_type_total` and `django_http_requests_total_by_method` as
+  `django_http_requests_total_by_method_total`. Use the scraped name in PromQL queries and alerts.
 - **Latency metrics** (`requests_latency_*`) record how long requests take. Separate metrics exist for end-to-end (
   before middlewares, by view/method, etc.).
 - **Body size metrics** record the distributions of incoming/outgoing body sizes in powers-of-two buckets.
