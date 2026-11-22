@@ -24,6 +24,33 @@ urlpatterns = [
 ]
 ```
 
+### Using the view with `LoginRequiredMiddleware`
+
+Django 5.1 added `django.contrib.auth.middleware.LoginRequiredMiddleware`,
+which redirects every unauthenticated request to the login page,
+including Prometheus scrapes of /metrics. To exempt the metrics view,
+wrap it with `login_not_required` and route it yourself instead of
+including `django_prometheus.urls`:
+
+```python
+from django.contrib.auth.decorators import login_not_required
+from django.urls import path
+
+from django_prometheus.exports import ExportToDjangoView
+
+urlpatterns = [
+    ...
+    path("metrics", login_not_required(ExportToDjangoView), name="prometheus-django-metrics"),
+]
+```
+
+This makes /metrics readable by anyone who can reach your server.
+Metrics can reveal details about your application and its traffic, so
+restrict access at another layer, for example by only exposing the path
+on an internal network or allowing only Prometheus in your reverse
+proxy. Alternatively, export the metrics on a separate port as
+described below.
+
 ## Exporting /metrics in a dedicated thread
 
 To ensure that issues in your Django app do not affect the monitoring,
