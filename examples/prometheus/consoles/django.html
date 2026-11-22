@@ -149,7 +149,7 @@ new PromConsole.Graph({
 <script>
 new PromConsole.Graph({
   node: document.querySelector("#gr_db_connerr"),
-  expr: "job:django_db_new_connection_erros_total:sum_rate30s",
+  expr: "job:django_db_new_connection_errors_total:sum_rate30s",
   name: "[[ alias ]]/[[ vendor ]]",
   yAxisFormatter: PromConsole.NumberFormatter.humanizeNoSmallPrefix,
   yHoverFormatter: PromConsole.NumberFormatter.humanizeNoSmallPrefix,
